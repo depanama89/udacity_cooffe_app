@@ -30,6 +30,7 @@ CORS(app)
     returns status code 200 and json {"success": True, "drinks": drinks} where drinks is the list of drinks
         or appropriate status code indicating reason for failure
 '''
+
 @app.route('/drinks',methods=['GET'])
 def get_drinks():
     all_drinks=Drink.query.all()
@@ -51,7 +52,8 @@ def get_drinks():
         or appropriate status code indicating reason for failure
 '''
 @app.route('/drinks-detail',methods=['GET'])
-def get_all_drinks_detail():
+@requires_auth('get:drinks-detail')
+def get_all_drinks_detail(payload):
     all_drinks = Drink.query.all()
     drinks = [drink.long() for drink in all_drinks ]
 
